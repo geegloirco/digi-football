@@ -1,0 +1,15 @@
+<!--<app-topbar-view></app-topbar-view>-->
+<!--<app-main-menu></app-main-menu>-->
+<app-navbar></app-navbar>
+<app-messages *ngIf="messageService.messages.length > 0"></app-messages>
+<div  class="container-fluid" #body>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-sx-12" style="padding: 0px 0px 0px 0px;">
+      <router-outlet name="dashboardBody"></router-outlet>
+    </div>
+  </div>
+  <!--<app-footer-view ></app-footer-view>-->
+
+</div>
+<load-wait *ngIf="isWaited"></load-wait>

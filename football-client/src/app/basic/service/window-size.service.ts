@@ -50,6 +50,10 @@ export class WindowSizeService {
     return this.isSmall;
   }
 
+  getSize(): WindowSizeModel {
+    return this.windowSize;
+  }
+
   changeSize(): Observable<WindowSizeModel> {
     return this.subject.asObservable();
   }

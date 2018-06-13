@@ -25,7 +25,7 @@
 .navbar-default {
   font-size: 1.15em;
   font-weight: 400;
-  background-color: rgba(2,2,50,1);
+  background-color: rgba(2,30,2,1);
   padding: 10px;
   border: 0px;
   border-radius: 0px;
@@ -40,9 +40,8 @@
 }
 
 .navbar-brand {
-  padding: 10px 15px !important;
+  padding: 0px 10px !important;
 }
-
 
 .navbar-default .navbar-brand {
   color: #ffffff;

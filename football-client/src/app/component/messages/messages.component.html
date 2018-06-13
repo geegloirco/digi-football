@@ -1,0 +1,12 @@
+<div class="message-panel" *ngIf="messages" >
+  <ng-template ngFor let-message [ngForOf]="messages" let-index="index">
+    <div class="alert alert-warning alert-dismissible fade show px-auto"
+         style="background-color: rgb(160, 160, 218); border-color: rgba(126, 126, 155, 1);">
+      <strong style="color: white;">{{message.message}}</strong>
+      <button type="button" style="color: white !important;" class="close"
+              (click)="messageService.remove(message)">
+        <i style="color: white !important;"  class="fa fa-times"></i>
+      </button>
+    </div>
+  </ng-template>
+</div>

@@ -3,11 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { BasicWindowContainerComponent } from "./basic/component/basic-window-container/basic-window-container.component";
 import { NavbarComponent } from "./component/navbar/navbar.component";
+import {DashboardComponent} from "./view/dashboard/dashboard.component";
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/navbar', pathMatch: 'full' },
-  { path: 'navbar', component: NavbarComponent }
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent, children: [
+  ] },
+
 ];
 
 @NgModule({

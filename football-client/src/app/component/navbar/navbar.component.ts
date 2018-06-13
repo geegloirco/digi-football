@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
+import { WindowSizeService } from "../../basic/service/window-size.service";
 
 @Component({
   selector: 'app-navbar',
@@ -13,6 +14,7 @@ export class NavbarComponent implements OnInit {
   operationBtn = false;
 
   constructor(
+    private windowSizeService: WindowSizeService,
     private activateRoute: ActivatedRoute) { }
 
   ngOnInit() {

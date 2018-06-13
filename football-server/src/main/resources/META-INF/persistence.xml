@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
+
+    <persistence-unit name="digi-football-pu" transaction-type="RESOURCE_LOCAL">
+        <class>ir.geeglo.business.data.entity.CityEntity</class>
+        <class>ir.geeglo.business.data.entity.CountryEntity</class>
+        <class>ir.geeglo.business.data.entity.LocationEntity</class>
+        <class>ir.geeglo.business.data.entity.ProvinceEntity</class>
+        <class>ir.geeglo.business.data.entity.UserEntity</class>
+        <class>ir.geeglo.business.data.entity.UserInfoEntity</class>
+        <class>ir.geeglo.business.data.entity.PlayerPositionEntity</class>
+        <class>ir.geeglo.business.data.entity.PlayerInfoEntity</class>
+        <class>ir.geeglo.business.data.entity.TeamEntity</class>
+        <properties>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:mysql://localhost:3306/digi_football?useUnicode=yes&amp;characterEncoding=UTF-8"/>
+            <property name="javax.persistence.jdbc.driver"
+                      value="com.mysql.cj.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value=""/>
+        </properties>
+    </persistence-unit>
+
+</persistence>

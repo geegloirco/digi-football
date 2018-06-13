@@ -1,0 +1,12 @@
+.alert {
+  margin-top: 1px !important;
+  margin-bottom: 1px !important;
+}
+
+.message-panel {
+  position: fixed;
+  right: 0;
+  top: 0px;
+  z-index: 1000;
+  width: 400px;
+}

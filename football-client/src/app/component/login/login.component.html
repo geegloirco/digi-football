@@ -1,0 +1,55 @@
+<ng-template [ngIf]="userModel.isGuest" >
+  <ul class="navbar-nav ml-auto" [ngStyle]="{'text-align': isSmallMode == true? 'center' : 'left'}">
+    <li class="nav-item dropdown" >
+      <a class="nav-link" >
+        <button id="google-login-button" type="button" class="btn btn-danger btn-block"
+                (click)="doLogin()">ورود با Google</button>
+      </a>
+    </li>
+    <!--<li class="nav-item">-->
+    <!--<a class="dropdown-item" -->
+    <!--[routerLink]="['../', 'admin']">پنل مدیریت</a>-->
+    <!--</li>-->
+  </ul>
+</ng-template>
+
+<ng-template [ngIf]="!userModel.isGuest" >
+
+  <ul class="navbar-nav ml-auto"
+      [ngStyle]="{'text-align': isSmallMode == true? 'center' : 'left', 'padding-top': windowSizeModel.isSmall ? '6px' : '0px' }">
+    <li class="nav-item" ngbDropdown  #myDrop="ngbDropdown" >
+      <button class="nav-link" ngbDropdownAnchor
+              (click)="toggleClick($event)"
+              class="btn btn-block"
+              [ngClass]="{'btn-outline-success': !menuState, 'btn-danger': menuState }"
+              style="white-space: nowrap"
+              id="navbarDropdown"
+              aria-haspopup="true"
+              aria-expanded="false">
+        <i class="fa fa-arrow-down px-2"
+           (click)="$event.stopPropagation(); menuState = true; myDrop.open();"
+           *ngIf="!menuState"></i>
+        <i class="fa fa-times px-2"
+           (click)="$event.stopPropagation(); menuState = false; myDrop.close();"
+           *ngIf="menuState"></i>
+        {{userModel.username}}
+      </button>
+      <div aria-labelledby="navbarDropdown"
+           ngbDropdownMenu
+           [ngStyle]="{'text-align': isSmallMode == true? 'center' : 'right'}">
+        <!--<a class="dropdown-item"-->
+           <!--*ngIf="userModel.isAdmin && isAdmin == false"-->
+           <!--[routerLink]="['../', 'admin']">پنل مدیریت</a>-->
+        <a *ngIf="userModel.isLoggedIn"
+           [routerLink]="[{ outlets: { dashboardBody: ['user-portal']} }]"
+           class="dropdown-item">نمایه کاربر</a>
+        <a *ngIf="userModel.isLoggedIn"
+           [routerLink]="[{ outlets: { dashboardBody: ['player-portal']} }]"
+           class="dropdown-item">نمایه فوتبالی</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" (click)="doLogout()" style="cursor: pointer;">خروج</a>
+      </div>
+    </li>
+  </ul>
+</ng-template>
+

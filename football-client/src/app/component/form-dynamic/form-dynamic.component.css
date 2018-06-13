@@ -1,0 +1,14 @@
+.panel {
+  margin: 10px 8px;
+}
+
+.panel-header {
+  background-color: rgba(116, 116, 145, 1);
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+input.error {
+  border-color: red;
+}

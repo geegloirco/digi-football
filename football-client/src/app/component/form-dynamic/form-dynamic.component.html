@@ -1,0 +1,140 @@
+<!--<div class="container-fluid">-->
+  <!--<div class="row">-->
+    <!--<a [routerLink]="['../for-test']">for test</a>-->
+  <!--</div>-->
+<!--</div>-->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3 col-sm-12 col-sx-12 pl-2" style="margin-left: 0px; padding: 0px;">
+      <div class="container-fluid">
+        <sidebar-view></sidebar-view>
+      </div>
+    </div>
+    <div class="col-md-9 col-sm-12 col-sx-12 " style="padding: 0px 8px 0px 0px;">
+      <div *ngIf="panels.length > 0"
+           class="container-fluid panel mx-0"
+           style="border: 1px solid lightgrey">
+        <div class="row panel-header py-2">
+          <div class="col-12 col-md-12 text-center" style="cursor: default;">عملیات</div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-4 col-12" style="margin: 0px 0px 15px 0px;">
+            <button (click)="actionClick('start')"
+                    [disabled]="moduleInfo.isActive(moduleName)"
+                    class="btn btn-success btn-block">Start<i class="fa fa-play pl-2"></i> </button>
+          </div>
+          <div class="col-md-4 col-12" style="margin: 0px 0px 15px 0px;">
+            <button (click)="actionClick('restart')"
+                    class="btn btn-info btn-block">Restart<i class="fa fa-reply pl-2"></i></button>
+          </div>
+          <div class="col-md-4 col-12" style="margin: 0px 0px 15px 0px;">
+            <button (click)="actionClick('stop')"
+                    [disabled]="!moduleInfo.isActive(moduleName)"
+                    class="btn btn-danger btn-block">Stop<i class="fa fa-stop pl-2"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid panel mx-0"  style="border: 1px solid lightgrey">
+        <div class="row panel-header py-2 text-center" >
+          <div class="col-12 col-md-12 text-center" style="cursor: default;">تنظیمات پیکربندی</div>
+        </div>
+
+        <div class="row py-4"
+             *ngIf="moduleInfo.isCreatable(moduleName) && !isNew">
+          <div class="col-md-12 col-12" >
+            <button class="btn btn-info btn-block"
+                    (click)="createNew()"
+                    style="color: white;">ماژول جدید<i class="fa fa-plus pl-2"></i></button>
+          </div>
+        </div>
+        <div class="row pt-4"
+             *ngIf="moduleInfo.isCreatable(moduleName) && isNew"
+             style="border-bottom: 1px solid lightgrey; background-color: #d9d9f1;">
+          <div class="col-md-12 col-12" >
+            <div class="form-group row" >
+              <label [attr.for]="" class="col-sm-4 col-md-4 col-form-label">نام ماژول:</label>
+              <div class="col-sm-8 col-md-8">
+                <input style="direction: ltr"
+                     [class.error]=""
+                       [(ngModel)]="newModuleName"
+                     class="form-control"
+                     [type]="text">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-md-12 col-12" *ngFor="let panel of panels">
+            <form novalidate (ngSubmit)="onSubmit(panel.form.value)" [formGroup]="panel.form">
+              <div class="form-group row" *ngFor="let prop of panel.value">
+                <label [attr.for]="prop" class="col-sm-4 col-form-label">{{labelMapService.getValue(prop.label)}}</label>
+
+                <div class="col-sm-8" [ngSwitch]="prop.type">
+
+                  <input *ngSwitchCase="'text'" style="direction: ltr"
+                         [class.error]="panel.form.get(prop.key).invalid && (panel.form.get(prop.key).dirty || panel.form.get(prop.key).touched)"
+                         class="form-control"
+                         [formControlName]="prop.key"
+                         [id]="prop.key" [type]="prop.type">
+                  <input *ngSwitchCase="'number'"
+                         [class.error]="panel.form.get(prop.key).invalid && (panel.form.get(prop.key).dirty || panel.form.get(prop.key).touched)"
+                         style="direction: ltr;"
+                         class="form-control"
+                         [formControlName]="prop.key"
+                         [id]="prop.key" [type]="prop.type">
+
+                  <div *ngSwitchCase="'radio'">
+                    <label *ngFor="let option of prop.options">
+                      <input
+                        class="form-control-plaintext"
+                        type="radio"
+                        [name]="prop.key"
+                        [formControlName]="prop.key"
+                        [value]="option.value"> {{option.label}}
+                    </label>
+                  </div>
+
+                  <div *ngSwitchCase="'select'">
+                    <select [formControlName]="prop.key" style="direction: ltr"
+                            class="form-control">
+                      <option *ngFor="let option of prop.options" [value]="option.value">
+                        {{ option.label }}
+                      </option>
+                    </select>
+                  </div>
+
+                </div>
+
+                <!--<div class="error" *ngIf="panel.form.get(prop.key).invalid && (panel.form.get(prop.key).dirty || panel.form.get(prop.key).touched)">-->
+                <!--<label *ngIf="panel.form.get(prop.key).errors.required" class="col-sm-2 col-form-label" style="color: red">({{ prop.label }} is required)</label>-->
+                <!--</div>-->
+              </div>
+              <!--<div class="row">-->
+              <!--<button type="submit" class="btn btn-success">Save</button>-->
+              <!--</div>-->
+            </form>
+            <div class="row">
+              <div class="col my-4" *ngIf="isNew">
+                <button class="btn btn-block btn-danger"
+                        (click)="cancelNew()">لغو<i class="fa fa-times pl-2"></i></button>
+              </div>
+              <div class="col my-4">
+                <button class="btn btn-block btn-success"
+                        (click)="postConfig(panel)">ارسال<i class="fa fa-upload pl-2"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!panels.length" style="height: 440px;">&nbsp;</div>
+        <!--<strong style="direction: ltr; margin: 10px;">فایل تنظیمات</strong>-->
+        <!--<pre style="direction: ltr; margin: 10px;">{{ panel.form.value | json }}</pre>-->
+        <!--<strong style="direction: ltr; margin: 10px; color: red;">فایل تنظیمات معتبر است:</strong> <span style="color: green">{{panel.form.valid}}</span>-->
+      </div>
+
+    </div>
+  </div>
+</div>
+

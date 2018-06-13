@@ -121,7 +121,8 @@ export class FormDynamicComponent implements OnInit {
         let url = this.serverInfo.getServerBaseUrl() + 'switch/runtime/configuration?module-name=' + this.moduleName;
         // let url = 'http://192.168.50.134:6116/switch/runtime/configuration?moduleName=general-configuration';
 
-        this.http.get(url, { headers: this.userAuthService.getBasicHeader() }).subscribe(res => {
+        // this.http.get(url, { headers: this.userAuthService.getBasicHeader() }).subscribe(res => {
+        this.http.get(url).subscribe(res => {
           // console.log(res);
           this.panels = [];
           this.dataObject = res;
@@ -191,8 +192,7 @@ export class FormDynamicComponent implements OnInit {
     if(!this.isNew) {
       this.waitingService.doWait();
       let url = this.serverInfo.getServerBaseUrl() + 'switch/runtime/configuration?module-name=' + this.moduleName;
-      this.http.put(url, panel.form.value,
-        { headers: this.userAuthService.getBasicHeader() })
+      this.http.put(url, panel.form.value)
         .subscribe(res => {
           this.waitingService.endWait();
           this.messageService.add(res['message']);
@@ -203,8 +203,7 @@ export class FormDynamicComponent implements OnInit {
     } else {
       this.waitingService.doWait();
       let url = this.serverInfo.getServerBaseUrl() + 'switch/runtime/configuration?module-name=' + this.newModuleName + '&template-module=' + this.moduleName;
-      this.http.post(url, panel.form.value,
-        { headers: this.userAuthService.getBasicHeader() })
+      this.http.post(url, panel.form.value)
         .subscribe(res => {
           this.waitingService.endWait();
           this.messageService.add(res['message']);

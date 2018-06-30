@@ -1,54 +1,52 @@
 import {
+  AfterContentInit,
+  AfterViewChecked,
   AfterViewInit, Component, ElementRef, OnInit,
   ViewChild
 } from '@angular/core';
-import {RootContainerService} from "../../control/root-container/root-container.component";
-import {MessagesComponent} from "../messages/messages.component";
-import {MessageService} from "../../service/message/message.service";
-import {WaitingService} from "../../service/waiting/waiting.service";
+import {MessagesComponent} from "../../control/component/messages/messages.component";
+import {MessageService} from "../../control/service/message/message.service";
+import {WaitingService} from "../../control/service/waiting/waiting.service";
 import {WindowSizeService} from "../../basic/service/window-size.service";
+import {WindowSizeModel} from "../../basic/model/window-size.model";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
-  isSmallMode = false;
-
-  @ViewChild('body') other: ElementRef;
+export class DashboardComponent implements OnInit, AfterViewInit, AfterContentInit {
   windowSizeModel: WindowSizeModel;
+  isSmallMode = false;
+  isWaited = true;
+
+  itsSize = 0;
 
   constructor(
     public waitingService: WaitingService,
     public messageService: MessageService,
-    private windowSizeService: WindowSizeService,
-    private element: ElementRef) {
+    private windowSizeService: WindowSizeService) {
     this.windowSizeModel = this.windowSizeService.getSize();
-    this.windowSizeService.changeSize().subscribe(size => {
-      this.windowSizeModel = size;
-      this.menuState = false;
-      this.myDrop.close();
-    });
   }
 
-  isWaited = false;
-
   ngOnInit() {
+    console.log("DashboardComponent ngOnInit");
+    this.isWaited = this.waitingService.getIsWaited();
     this.waitingService.subscribeWaiting().subscribe(isWaited => {
       this.isWaited = isWaited;
     });
   }
 
   ngAfterViewInit() {
-    // console.log(this.element.nativeElement.clientHeight);
-    // console.log(this.header);
-    // console.log(this.other);
-    // let headerHeight = this.body.nativeElement.clientHeight;
-
+    console.log("DashboardComponent ngAfterViewInit");
+    this.windowSizeService.changeSize().subscribe(size => {
+      this.windowSizeModel = size;
+    });
   }
 
-  itsSize = 0;
+  ngAfterContentInit() {
+    console.log("DashboardComponent ngAfterContentInit");
+  }
 
   windowResized(isSmall: boolean, size, owner: DashboardComponent) {
     console.log("dashboard windowResized");

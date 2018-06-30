@@ -16,6 +16,12 @@ export class WindowSizeService {
   subject = new Subject<WindowSizeModel>();
 
   constructor(private windowRef: WindowRefService) {
+    console.log(windowRef.nativeWindow.innerWidth);
+    console.log(windowRef.nativeWindow.innerHeight);
+
+    console.log(windowRef.nativeWindow);
+    console.log(windowRef.nativeWindow);
+
     this.setWindowSizeModel(
       windowRef.nativeWindow.innerWidth,
       windowRef.nativeWindow.innerHeight);

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { WindowSizeService } from "../../basic/service/window-size.service";
+import { WindowSizeService } from "../../../basic/service/window-size.service";
 
 @Component({
   selector: 'app-navbar',
@@ -18,6 +18,7 @@ export class NavbarComponent implements OnInit {
     private activateRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    console.log("NavbarComponent ngOnInit");
     if (this.activateRoute.snapshot.firstChild) {
       let path = this.activateRoute.snapshot.firstChild.url[0].path;
     }

@@ -1,11 +1,10 @@
 import {Component, NgZone, OnInit} from '@angular/core';
-import {ServerInfoService} from "../../../service/server-info/server-info.service";
 import {ActivatedRoute, Params} from "@angular/router";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
-import {ModuleInfoService} from "../../../service/module-info/module-info.service";
-import {MessageService} from "../../../service/message/message.service";
-import {WaitingService} from "../../../service/waiting/waiting.service";
+import {MessageService} from "../../service/message/message.service";
+import {WaitingService} from "../../service/waiting/waiting.service";
+import {ServerInfoService} from "../../../service/server-info/server-info.service";
 
 
 @Component({
@@ -172,12 +171,6 @@ export class FormDynamicComponent implements OnInit {
   }
 
   actionClick(actionName) {
-    if(actionName === 'stop')
-        this.moduleInfo.stop(this.moduleName);
-    else if(actionName === 'start')
-        this.moduleInfo.start(this.moduleName);
-    else if(actionName === 'restart')
-      this.moduleInfo.restart(this.moduleName);
   }
 
   onSubmit(form) {

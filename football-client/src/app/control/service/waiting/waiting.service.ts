@@ -11,6 +11,10 @@ export class WaitingService {
     console.log("WaitingService.constructor()");
   }
 
+  getIsWaited() {
+    return this.isWaited;
+  }
+
   doWait() {
     this.isWaited = true;
     this.subject.next(this.isWaited);

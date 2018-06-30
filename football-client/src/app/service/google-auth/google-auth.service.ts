@@ -3,26 +3,10 @@ import { AppGlobals } from './app-globals';
 import {Observable} from "rxjs/Observable";
 import {HttpClient} from "@angular/common/http";
 import {ServerInfoService} from "../server-info/server-info.service";
+import {LoginModel} from "../../model/login.model";
 // import {CartService} from "../../cart-service/cart.service";
 
 declare const gapi: any;
-
-export class LoginModel {
-  username: string;
-  isLoggedIn: boolean;
-  isAdmin: boolean;
-  isGuest: boolean;
-
-  constructor(username: string,
-              isAdmin: boolean,
-              isGuest: boolean,
-              isLoggedIn: boolean) {
-    this.username = username;
-    this.isAdmin = isAdmin;
-    this.isGuest = isGuest;
-    this.isLoggedIn = isLoggedIn;
-  }
-}
 
 @Injectable()
 export class GoogleAuthService {

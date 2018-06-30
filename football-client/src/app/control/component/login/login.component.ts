@@ -2,13 +2,12 @@ import {Component, Input, NgZone, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable } from "rxjs/Observable";
-import {
-  GoogleAuthService,
-  LoginModel
-} from "../../service/google-auth/google-auth.service";
-import {WindowSizeService} from "../../basic/service/window-size.service";
-import {WindowSizeModel} from "../../basic/model/window-size.model";
+import { GoogleAuthService } from "../../../service/google-auth/google-auth.service";
+import {WindowSizeService} from "../../../basic/service/window-size.service";
+import {WindowSizeModel} from "../../../basic/model/window-size.model";
 import {NgbDropdown, NgbDropdownConfig} from "@ng-bootstrap/ng-bootstrap";
+import {WaitingService} from "../../service/waiting/waiting.service";
+import {LoginModel} from "../../../model/login.model";
 
 @Component({
   selector: 'app-login',
@@ -30,6 +29,7 @@ export class LoginComponent
   @ViewChild('myDrop') myDrop: NgbDropdown;
 
   constructor(
+    public waitingService: WaitingService,
     private ngbConfig: NgbDropdownConfig,
     private windowSizeService: WindowSizeService,
     private currentActivatedRoute: ActivatedRoute,
@@ -41,6 +41,7 @@ export class LoginComponent
     // console.log('LoginViewComponent constructor');
     this.windowSizeModel = this.windowSizeService.getSize();
     this.windowSizeService.changeSize().subscribe(size => {
+      console.log("resized")
       this.windowSizeModel = size;
       this.menuState = false;
       this.myDrop.close();
@@ -53,6 +54,8 @@ export class LoginComponent
     if(!this.googleAuthService.isAuthInitialized()) {
       this.googleAuthService.setGoogleClientId(
         '290205995528-qphql4q12vhali04vhrlao0ljqo80r3r.apps.googleusercontent.com');
+
+      this.waitingService.doWait();
       this.googleAuthService.checkServerLogin()
         .subscribe(res => {
           if (res != null) {
@@ -60,6 +63,7 @@ export class LoginComponent
               this.userModel = res;
               console.log(res);
             });
+            this.waitingService.endWait();
           }
         });
     } else {

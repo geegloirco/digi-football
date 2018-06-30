@@ -1,0 +1,20 @@
+@media (min-width: 768px) {
+  .navbar-header {
+    float: left;
+  }
+}
+
+.container-fluid .row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.footer-default {
+  font-size: 1.15em;
+  font-weight: 400;
+  background-color: rgba(2,30,2,1);
+  color: white;
+  padding: 10px;
+  border: 0px;
+  border-radius: 0px;
+}
